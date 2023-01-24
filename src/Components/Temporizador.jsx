@@ -6,7 +6,7 @@ function Temporizador({ expiryTimestamp }) {
     seconds,
     minutes,
     hours,
-    days,
+   
     isRunning,
     start,
     pause,
@@ -20,7 +20,7 @@ function Temporizador({ expiryTimestamp }) {
     <div className='mt-5' style={{textAlign: 'center'}}>
      <h2>Tu rutina ha tenido una duracion de:</h2>
       <div style={{fontSize: '100px'}}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
 
       <div className='flex gap-3 justify-center'>
