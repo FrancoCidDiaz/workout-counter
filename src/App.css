@@ -9,6 +9,7 @@ width: 100vw;
 
 *{
   overflow-x: hidden;
+  line-height: inherit !important;
 }
 
 
