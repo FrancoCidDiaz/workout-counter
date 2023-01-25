@@ -12,10 +12,11 @@ const InputList = () => {
     
   <InputCounter key={index} data={exercise}/>
 
-
-
       )          
       )}  
+
+
+
     </div>
   )
 }

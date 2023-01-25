@@ -1,26 +1,25 @@
 import React from 'react';
 import { useTimer,useStopwatch } from 'react-timer-hook';
 
-function Temporizador({ expiryTimestamp }) {
+function TemporizadorSeries({ expiryTimestamp }) {
   const {
     seconds,
     minutes,
-    hours,
-   
     isRunning,
     start,
     pause,
     resume,
     restart,
-  }  = useStopwatch({ autoStart: true });
+    reset,
+  }  = useStopwatch({ autoStart: false});
   
 
 
   return (
-    <div className='my-5' style={{textAlign: 'center'}}>
-     <h2>Tu rutina ha tenido una duracion de:</h2>
+    <div className='mt-5' style={{textAlign: 'center'}}>
+     <h2>Calcula tus descansos entre series</h2>
       <div style={{fontSize: '90px'}}>
-        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+       <span>{minutes}</span>:<span>{seconds}</span>
       </div>
 
       <div className='flex gap-3 justify-center'>
@@ -28,16 +27,11 @@ function Temporizador({ expiryTimestamp }) {
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       {/* <button onClick={resume}>Resume</button> */}
-      {/* <button onClick={() => {
-        // Restarts to 5 minutes timer
-        const time = new Date();
-        time.setSeconds(time.getSeconds() + 300);
-        restart(time)
-      }}>Restart</button> */}
+      { <button onClick={reset}>Restart</button> }
       </div>
     </div>
   );
 }
 
 
-export default Temporizador
+export default TemporizadorSeries

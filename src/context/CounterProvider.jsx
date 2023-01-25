@@ -16,8 +16,16 @@ const fecha = new Date()
 const numMes = fecha.getMonth();
 const nombreMes = meses[numMes];
 const dia = fecha.getDate()
-console.log(dia)
 
+const [alerta, setAlerta] = useState([])
+
+const mostrarAlerta = alerta => {
+  setAlerta(alerta)
+
+  setTimeout(() => {
+      setAlerta({})
+  }, 3500);
+}
 
 return (
 <CounterContext.Provider
@@ -27,7 +35,10 @@ value={{
     meses,
     fecha,
     nombreMes,
-    dia
+    dia,
+    alerta,
+    setAlerta,
+    mostrarAlerta
 }}>
   
 
