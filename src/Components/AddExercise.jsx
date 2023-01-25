@@ -32,7 +32,7 @@ const handleFocus = (e) => {
         <form className='flex flex-col items-center justify-center gap-3 w-2/4 mx-auto' onSubmit={handleSubmit}>
 
        <div className='input'>
-        <input className='text-center text-black ' placeholder='Añade un ejercicio' name="input" type="text" onFocus={handleFocus} onChange={e => setNewExercise(e.target.value)}/>
+        <input className='text-center text-black ' placeholder='Añade un ejercicio' autocomplete="off" name="input" type="text" onFocus={handleFocus} onChange={e => setNewExercise(e.target.value)}/>
         </div>
 
         <div className='border rounded-xl'>
