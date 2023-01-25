@@ -36,7 +36,7 @@ const handleFocus = (e) => {
         </div>
 
         <div className='border rounded-xl'>
-            <input  className='px-12'  value="Agregar" type="submit" />
+            <input  className='px-12 active:bg-violet-900 duration-300'  value="Agregar" type="submit" />
             </div>
         
         </form>
