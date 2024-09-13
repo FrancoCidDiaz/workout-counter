@@ -10,7 +10,7 @@ const InputList = () => {
     <div className='text-dark pt-10 flex flex-col items-center'>
       {exercises.map((exercise,index) => (
     
-  <InputCounter key={index} data={exercise}/>
+        <InputCounter key={index} data={exercise}/>
 
       )          
       )}  

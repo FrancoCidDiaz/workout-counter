@@ -1,46 +1,93 @@
 import React from 'react'
-import { useState } from 'react'
+import useCounter from '../context/UseCounter'
+import { useState, useEffect } from 'react'
 
-const InputCounter = ({data}) => {
+const InputCounter = ({ data }) => {
 
-const [counter, setCounter] = useState(0)
+  const { exercises, removeExercise, updateSeriesCount, updateSeriesDetails } = useCounter()
 
-const increment = () => {
-    setCounter(counter + 1)
-}
+  const [counter, setCounter] = useState(0)
+  const [exerciseDetails, setExerciseDetails] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
 
-const decrement = () => {
-    if(counter <= 0 ) return
-    setCounter(counter - 1)
-}
+  useEffect(() => {
+    const exercise = exercises.find(ex => ex.name === data);
+    if (exercise) {
+      setCounter(exercise.series.length);
+    }
+  }, [exercises, data]);
 
-const reset = () => {
-  if(window.confirm("Estas seguro que quieres resetear el ejercicio")){
-  setCounter(0)}  
-  return
-  
-}
+  const increment = () => {
+    setCounter(counter + 1);
+    updateSeriesCount(data, counter + 1);
+  };
+
+  const decrement = () => {
+    if (counter > 0) {
+      setCounter(counter - 1);
+      updateSeriesCount(data, counter - 1);
+    }
+  };
+
+  const deleteExercise = () => {
+    if (window.confirm("¿Estás seguro que quieres eliminar este ejercicio?")) {
+      removeExercise(data)
+    }
+  };
+
+  const handleChange = (index, field, value) => {
+    updateSeriesDetails(data, index, { [field]: value });
+  };
+
+  const toggleDetails = () => {
+    setShowDetails(prevState => !prevState); // Alternar la visibilidad de los detalles
+  };
 
   return (
     <div className='flex flex-col text-2xl my-2 items-center w-full'>
-        <div className='flex gap-1 w-100 mb-3 items-center' >
-            <p className='text-center'>{data}</p>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white bg-violet-700">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-</svg> */}
+      <div className='flex gap-1 w-100 mb-3 items-center'>
+        <p className='text-center cursor-pointer' onClick={toggleDetails}>{data}</p>
+      </div>
+      <div className='flex items-center gap-5 mb-4'>
+        <button onClick={deleteExercise}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
 
+        </button>
+        <button className='bg-violet-700 text-white w-10 h-10' onClick={decrement}>-</button>
+        <button className='bg-violet-700 text-white w-10 h-10' onClick={increment}>+</button>
+        <div>{counter}</div>
+      </div>
+      {showDetails && (
+        <div className='flex flex-col items-center'>
+          {Array.from({ length: counter }).map((_, index) => (
+            <div key={index} className='mb-2 flex gap-4'>
+              <input
+                type='text'
+                placeholder='Peso'
+                //value={exerciseDetails[index]?.weight || ''}
+                //onChange={(e) => handleChange(index, 'weight', e.target.value)}
+                className='border p-2'
+              />
+              <input
+                type='text'
+                placeholder='Reps'
+                //value={exerciseDetails[index]?.reps || ''}
+                //onChange={(e) => handleChange(index, 'reps', e.target.value)}
+                className='border p-2'
+              />
+              <input
+                type='text'
+                placeholder='RIR'
+                //value={exerciseDetails[index]?.rir || ''}
+                //onChange={(e) => handleChange(index, 'rir', e.target.value)}
+                className='border p-2'
+              />
+            </div>
+          ))}
         </div>
-        <div className='flex items-center gap-5'>
-        
-            <button onClick={reset}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-</svg>
-</button>
-            <button className='bg-violet-700 text-white w-10 h-10' onClick={decrement}>-</button>
-            
-            <button  className='bg-violet-700 text-white w-10 h-10' onClick={increment}>+</button>
-            <div>{counter}</div>
-        </div>
+      )}
     </div>
   )
 }

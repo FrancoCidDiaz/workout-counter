@@ -17,15 +17,57 @@ const numMes = fecha.getMonth();
 const nombreMes = meses[numMes];
 const dia = fecha.getDate()
 
-const [alerta, setAlerta] = useState([])
+const [alerta, setAlerta] = useState({});
 
-const mostrarAlerta = alerta => {
-  setAlerta(alerta)
+const mostrarAlerta = mensaje => {
+  setAlerta({ message: mensaje, type: 'error' });
 
   setTimeout(() => {
-      setAlerta({})
+      setAlerta({});
   }, 3500);
+};
+
+const removeExercise = (exerciseToRemove) => {
+  setExercises(exercises.filter(exercise => exercise !== exerciseToRemove));
 }
+
+const addExercise = (name) => {
+  setExercises([...exercises, { name, series: [] }]);
+};
+
+
+
+const addSeries = (name) => {
+  setExercises(exercises.map(exercise =>
+    exercise.name === name
+      ? { ...exercise, series: [...exercise.series, { weight: 0, reps: 0, rir: 0 }] }
+      : exercise
+  ));
+};
+
+const updateSeriesCount = (name, count) => {
+  setExercises(exercises.map(exercise =>
+    exercise.name === name
+      ? { ...exercise, series: Array(count).fill({ weight: 0, reps: 0, rir: 0 }) }
+      : exercise
+  ));
+};
+
+const updateSeriesDetails = (exerciseName, seriesIndex, details) => {
+  setExercises(exercises.map(exercise =>
+    exercise.name === exerciseName
+      ? { 
+          ...exercise, 
+          series: exercise.series.map((series, index) => 
+            index === seriesIndex ? { ...series, ...details } : series
+          )
+        }
+      : exercise
+  ));
+};
+
+
+
 
 return (
 <CounterContext.Provider
@@ -38,7 +80,12 @@ value={{
     dia,
     alerta,
     setAlerta,
-    mostrarAlerta
+    mostrarAlerta, 
+    removeExercise,
+    addExercise,
+    addSeries,
+    updateSeriesCount,
+    updateSeriesDetails
 }}>
   
 
