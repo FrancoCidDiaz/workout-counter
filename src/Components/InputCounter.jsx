@@ -62,27 +62,27 @@ const InputCounter = ({ data }) => {
       {showDetails && (
         <div className='flex flex-col items-center'>
           {Array.from({ length: counter }).map((_, index) => (
-            <div key={index} className='mb-2 flex gap-4'>
+            <div key={index} className='mb-2 flex gap-2 w-11/12'>
               <input
                 type='text'
                 placeholder='Peso'
                 //value={exerciseDetails[index]?.weight || ''}
                 //onChange={(e) => handleChange(index, 'weight', e.target.value)}
-                className='border p-2'
+                className='border p-2 w-1/3'
               />
               <input
                 type='text'
                 placeholder='Reps'
                 //value={exerciseDetails[index]?.reps || ''}
                 //onChange={(e) => handleChange(index, 'reps', e.target.value)}
-                className='border p-2'
+                className='border p-2 w-1/3'
               />
               <input
                 type='text'
                 placeholder='RIR'
                 //value={exerciseDetails[index]?.rir || ''}
                 //onChange={(e) => handleChange(index, 'rir', e.target.value)}
-                className='border p-2'
+                className='border p-2 w-1/3'
               />
             </div>
           ))}
